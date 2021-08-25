@@ -4,7 +4,7 @@
 
 Cisco Umbrella is a DNS and Proxy cloud service used to secure and restrict traffic without a VPN, it intercept all DNS requests and will proxy all the traffic. Based on the configuration it could reject all traffic that is not HTTP/HTTPS.
 
-> DISCLAIMER : Use the below at your own risk, if your company/school has set Cisco Umbrella is for a reason. These are provided only for information on how this software works and which are its weakness.
+> :warning: DISCLAIMER : Use the below at your own risk, if your company/school has set Cisco Umbrella is to protect the devices from cyber threats. A bypass of Cisco Umbrella is likely a breach in the local policy of your company/school, the information in this page shall be used for *educational purpose only* and are shared to provide a better understanding of Cisco Umbrella.
 
 Assuming that you could not disable Cisco Umbrella, the following option can allow you to bypass it:
 
@@ -32,7 +32,8 @@ This bypass may not work if future updates of Cisco Umbrella will inspect local 
 
 > Cisco Anyconnect (that may include also Cisco Umbrella) when connected to a VPN will force all the traffic (even the one that could be resolved locally) via the VPN, this will make ineffective the local proxy bypass.
 
-> Based on the administrative rights available, you could disable "Cisco AnyConnect" from the local interface to the Android device and set the **metrics** to an high enogh value (say 1000) to have only the local traffic (so the one to the local proxy) via your Android connection. Without all traffic is via Android, even system updated or others that may consume high volume of data.
+> Based on the administrative rights available, you could disable "Cisco AnyConnect" from the local interface to the Android device and set the *metrics* to an high enogh value (say 1000) to have only the local traffic (so the one to the local proxy) via your Android connection. Without all traffic is via Android, even system updated or others that may consume high volume of data.
+> ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/tethering_interface_settings.PNG)
 
 > If the Android device is connected to a WiFi network it will work as long as the WiFi network has no Cisco Umbrella on it (or any other or restriction), so it will work on a home WiFi connection but likely no on a enterprice WiFi connection.
 
