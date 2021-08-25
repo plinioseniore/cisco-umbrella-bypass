@@ -48,4 +48,4 @@ Cisco Umbrella usage is increasing while more people are working from home, so t
 
 ### Using scrcpy to remote into your Android
 
-If your end goal is only to browse websites that are not allowed via Cisco Umbrella, another option is to use [scrcpy](https://github.com/Genymobile/scrcpy) that via USB will remote your Android device into a windows. Then your can browse with your mobile connection.
+If your end goal is only to browse websites that are not allowed via Cisco Umbrella, another option is to use [scrcpy](https://github.com/Genymobile/scrcpy) that via USB will remote your Android device into a window. Then your can browse with your mobile connection.
