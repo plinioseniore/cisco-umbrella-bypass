@@ -10,9 +10,9 @@ Assuming that you could not disable Cisco Umbrella, the following option can all
 
 ### Stop traffic to Cisco Umbrella Cloud DNS and Proxy
 
-Creating a firewall rule to don't allow traffic to Cisco Umbrella DNS and Proxy, the Umbrella DNS will became inactive but the Proxy will still be there and will timeout. This works but is by overall slow, as you need to wait for the Umbrella timeout of each connection.
+Creating a firewall rule to don't allow traffic to Cisco Umbrella DNS and Proxy, the Umbrella DNS will became inactive but the Proxy will still be there and will timeout. The connection is estabilished directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough (like a VPN over HTTPS) once the first timeout is gone, the performance are the usual ones.
 
-Based on the rights you have on your PC you can have this rule in Windows Firewall or your home Firewall (if it has configurable options like openWrt).
+Based on the rights you have on your PC you can have this rule in Windows Firewall or in your home Firewall (if it has configurable options like openWrt).
 
 IP Addresses to block : 146.112.255.0 to 146.112.255.255, 208.67.222.222, 208.67.220.220
 
@@ -25,6 +25,8 @@ IP Addresses to block : 146.112.255.0 to 146.112.255.255, 208.67.222.222, 208.67
 The traffic to the local network is not redirected to the Cisco Umbrella Proxy, in the below image there is an HTTP request to the LAN and WAN interface of the router web console. The first request to the LAN address is resolved directly, rather the WAN one is redirected via Cisco Umbrella Proxy, so having a proxy on a local interface is a bypass option. The local Proxy will resolve the DNS and handle all the traffic via your mobile connection.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/http_to_router_lan_wan_interface.png)
+
+The traffic that the IP stack could resolve without an IP gateway (the connections to IP addresses in the same IP subnet) are not processed via Cisco Umbrella.
 
 Running the [Servers Ultimate](https://www.google.com/search?client=firefox-b-d&q=servers+ultimate) app, the Android device will act as Proxy, use the USB Tethering connection to create a local network interface. In Firefox and Softether (or any other application that support HTTP Proxy) configure the Proxy option to redirect the traffic through the local interface of the Android phone.
 
