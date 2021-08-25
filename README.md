@@ -22,11 +22,13 @@ IP Addresses to block : 146.112.255.0 to 146.112.255.255, 208.67.222.222, 208.67
 
 ### Use a local Proxy on Android
 
-The traffic to the local network could not be redirected to the Cisco Umbrella Proxy, so having a proxy on a local interface is a bypass option. The local Proxy will resolve the DNS and handle all the traffic via your mobile connection.
+The traffic to the local network is not redirected to the Cisco Umbrella Proxy, in the below image there is an HTTP request to the LAN and WAN interface of the router web console. The first request to the LAN address is resolved directly, rather the WAN one is redirected via Cisco Umbrella Proxy, so having a proxy on a local interface is a bypass option. The local Proxy will resolve the DNS and handle all the traffic via your mobile connection.
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/http_to_router_lan_wan_interface.png)
 
 Running the [Servers Ultimate](https://www.google.com/search?client=firefox-b-d&q=servers+ultimate) app, the Android device will act as Proxy, use the USB Tethering connection to create a local network interface. In Firefox and Softether (or any other application that support HTTP Proxy) configure the Proxy option to redirect the traffic through the local interface of the Android phone.
 
-As is now, this bypass works because the filtering is done on the cloud, but if a future update of Cisco Umbrella will inspect local traffic and stop proxy protocols this will no longer work.
+This bypass may not work if future updates of Cisco Umbrella will inspect local traffic for proxy connection.
 
 > Cisco Anyconnect (that may include also Cisco Umbrella) when connected to a VPN will force all the traffic (even the one that could be resolved locally) via the VPN, this will make ineffective the local proxy bypass.
 
