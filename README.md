@@ -10,8 +10,11 @@ Assuming that you could not disable Cisco Umbrella, the following option can all
 
 ### Stop traffic to Cisco Umbrella Cloud DNS and Proxy
 
-Creating a firewall rule to don't allow traffic to Cisco Umbrella DNS and Proxy, the Umbrella DNS will became inactive but the Proxy will still be there and will timeout. The connection is estabilished directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough (like a VPN over HTTPS) once the first timeout is gone, the performance are the usual ones.
+Creating a firewall rule to don't allow traffic to Cisco Umbrella DNS and Proxy, the Umbrella DNS will became inactive but the Proxy will still be there and will timeout. 
 
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_dns_disabled.png)
+
+The connection is estabilished directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough (like a VPN over HTTPS) once the first timeout is gone will have the usual performances.
 Based on the rights you have on your PC you can have this rule in Windows Firewall or in your home Firewall (if it has configurable options like openWrt).
 
 IP Addresses to block : 146.112.255.0 to 146.112.255.255, 208.67.222.222, 208.67.220.220
