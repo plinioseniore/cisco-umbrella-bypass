@@ -29,7 +29,9 @@ The traffic to the local network is not redirected to the Cisco Umbrella Proxy, 
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/http_to_router_lan_wan_interface.png)
 
-The traffic that the IP stack could resolve without an IP gateway (the connections to IP addresses in the same IP subnet) are not processed via Cisco Umbrella.
+The IP addresses in the private range are not processed by Cisco Umbrella even if the traffic is processed via the IP gateway, this make sense as the Cisco Umbrella Proxy could not access the local resources for inspection. The actual implementation of Cisco Umbrella doesn't introduce any restriction on the traffic between local private addresses, so that any port port is allowed. In the below image, two networks with private addresses can communicate on HTTPS via the gateway (the router).
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/local_address_multihop.png)
 
 Running the [Servers Ultimate](https://www.google.com/search?client=firefox-b-d&q=servers+ultimate) app, the Android device will act as Proxy, use the USB Tethering connection to create a local network interface. In Firefox and Softether (or any other application that support HTTP Proxy) configure the Proxy option to redirect the traffic through the local interface of the Android phone.
 
