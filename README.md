@@ -82,7 +82,7 @@ If you have an ![openWrt](https://openwrt.org/) router, you can run ![tinyproxy]
 
 ### NAT Traffic
 
-A *PREROUTING* rule in the iptables of your openWrt router to transfer the TCP 80 and 443 to your router on the port were tinyproxy is listening (48241 in the example) will intercept all the traffic with destination Cisco Umbrella Proxy.
+A *PREROUTING* rule in the iptables of your openWrt router, to transfer the TCP 80 and 443 to your router on the port where tinyproxy is listening (48241 in the example) , will intercept all the traffic with destination Cisco Umbrella Proxy.
 
 ```
 iptables -t nat -A PREROUTING -d 146.112.0.0/16 -p tcp  --dport 443 -j DNAT --to-destination 192.168.127.1:48241
