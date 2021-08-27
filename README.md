@@ -32,6 +32,23 @@ IP Addresses to block : (Proxy) 146.112.0.0/16, (DNS) 208.67.222.222, (DNS) 208.
 
 > A future update may stop all network connectivity when not able to connect to Cisco Umbrella cloud services, having this bypass no longer effective.
 
+Based on the notes by [Andre Camillo](https://medium.com/swlh/a-study-on-how-cisco-umbrella-roaming-client-works-f3cd552c7112) there should be some redirect of the DNS traffic to the Cisco Umbrella services, rather in the implementation under test only TCP port 53 is bind to *dnscrypt-proxy.exe*.
+
+![](https://github.com/plinioseniore/cisco-umbrella-bypass/blob/main/img/netstat.png?raw=true)
+
+Furthermore there is not DNS traffic with 208.67.0.0/16
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/udp_probe.PNG)
+
+and all the DNS traffic is directly with the home router
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/dcs_requestes.PNG)
+
+As all the traffic seems to go via the Cisco Umbrella Proxy, it could be that the implementation under test is not really using DNS and the filter is done at proxy level. As proof, the log of the DNS on the OpenWrt router shows DNS requests received, so the UDP communication to 208.67.0.0/16 is not an encrypted DNS and Cisco Umbrella doesn't intercept the traffic at such a level that it doesn't appear in WireShark.
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_dns_log.PNG)
+
+
 ### Use a local Proxy on Android
 
 The traffic to the local network is not redirected to the Cisco Umbrella Proxy, in the below image there is an HTTP request to the LAN and WAN interface of the router web console. The first request to the LAN address is resolved directly, rather the WAN one is redirected via Cisco Umbrella Proxy, so having a proxy on a local interface is a bypass option. The local Proxy will resolve the DNS and handle all the traffic via your mobile connection.
@@ -74,9 +91,7 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_forwarding_tinyproxy.PNG)
 
-> Having a NAT rule that process the Cisco Umbrella proxy requests via tinyproxy means that the DNS stills runs on Cisco Umbrella (unless you introduce a firewall rule to disable it), the tinyproxy will receive the requests to connect to a specific IP address resolved by Cisco Umbrella DNS. Rather having a proxy configured in Firefox means that the browser doesn't process any DNS request and send to the proxy a request on a specific domain, so that tinyproxy will query the DNS.
-> Having the Cisco Umbrella DNS means having still some level of protection even if the Cisco Umbrella proxy is not used, rather a proxy configured in Firefox means a complete bypass of Cisco Umbrella.
-
+> Compared to a proxy configured in Firefox the main difference is that DNS is resolved locally and not by tinyproxy, that receive directly the resolved IP address and not the domain name.
 
 ### Using scrcpy to remote into your Android
 
