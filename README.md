@@ -63,13 +63,11 @@ If you have an ![openWrt](https://openwrt.org/) router, you can run ![tinyproxy]
 
 > As side information, the traffic that is not HTTP/HTTPS may be allowed based on the configuration. In the above picture the QUIC protocol is not transferred to a proxy (even because is UDP and the Cisco Umbrella Proxy seems an HTTP Proxy and not a SOCKS5 Proxy) but other protocols may be stopped.
 
-A *PREROUTING* rule in the iptables of your openWrt router to trasfer the TCP 80 and 443 to your router on the port were tinyproxy is listing (48241 in the example) will intercept all the traffic with destination Cisco Umbrella Proxy.
+A *PREROUTING* rule in the iptables of your openWrt router to trasfer the TCP 80 and 443 to your router on the port were tinyproxy is listening (48241 in the example) will intercept all the traffic with destination Cisco Umbrella Proxy.
 
 ```
-{
 iptables -t nat -A PREROUTING -d 146.112.0.0/16 -p tcp  --dport 443 -j DNAT --to-destination 192.168.127.1:48241
 iptables -t nat -A PREROUTING -d 146.112.0.0/16 -p tcp  --dport 80  -j DNAT --to-destination 192.168.127.1:48241
-}
 ```
 
 In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16 the request is processed by tinyproxy. As result is not required to alter the browser (or any other application to be allowed) configuration as in case of an Android Proxy.
@@ -79,3 +77,11 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 ### Using scrcpy to remote into your Android
 
 If your end goal is only to browse websites that are not allowed via Cisco Umbrella, another option is to use [scrcpy](https://github.com/Genymobile/scrcpy) that via USB will remote your Android device into a window. Then your can browse with your mobile connection.
+
+# Credits
+
+This study is based on some experiments done by me and my friend ![lalontra](https://twitter.com/lalontra) and the following web resources:
+
+- ![Cisco Umbrella - Appendix A – Status, States, and Functionality](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality)
+- ![A Study on How Cisco Umbrella Roaming Client Works](https://medium.com/swlh/a-study-on-how-cisco-umbrella-roaming-client-works-f3cd552c7112)
+- ![Bypass Cisco Umbrella & OpenDNS website block](https://www.youtube.com/watch?v=SbN2Nzzy59Q)
