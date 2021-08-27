@@ -93,10 +93,6 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 
 > Compared to a proxy configured in Firefox the main difference is that DNS is resolved locally and not by tinyproxy, that receive directly the resolved IP address and not the domain name.
 
-### Using scrcpy to remote into your Android
-
-If your end goal is only to browse websites that are not allowed via Cisco Umbrella, another option is to use [scrcpy](https://github.com/Genymobile/scrcpy) that via USB will remote your Android device into a window. Then your can browse with your mobile connection.
-
 # Credits
 
 This study is based on some experiments done by me and my friend [lalontra](https://twitter.com/lalontra) and the following web resources:
