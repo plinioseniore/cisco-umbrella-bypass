@@ -12,14 +12,22 @@ Assuming that you could not disable Cisco Umbrella, the following option can all
 
 Creating a firewall rule to don't allow traffic to Cisco Umbrella DNS and Proxy, the Umbrella DNS will became inactive but the Proxy will still be there and will timeout. 
 
+In the ![Cisco Umbrella documentation](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality) is listed that if *There is at least one active network connection; however, the Umbrella roaming client can’t connect to 208.67.222.222 / 208.67.220.220 / 2620:119:53::53 / 2620:119:35::35 over port 53/UDP on any active connection. The user is not protected by Umbrella or reporting to Umbrella. The system's DNS settings are now back to their original settings (DHCP or Static).*
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_status.PNG)
+
+As resut a yellow icon is shown on Cisco Umbrella client, according to the documentaiton this could be enough to have Cisco Umbrella disabled, but in the implementation I've tested, even with the Cisco Umbrella DNS is unreachable the proxy features will still run.
+
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_dns_disabled.png)
 
-The connection is estabilished directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough (like a VPN over HTTPS) once the first timeout is gone will have the usual performances.
+Including also the Cisco Umbrella proxy in the deny list of the firewall rue will have this bypass working. The connection is estabilished directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough (like a VPN over HTTPS) once the first timeout is gone will have the usual performances.
 Based on the rights you have on your PC you can have this rule in Windows Firewall or in your home Firewall (if it has configurable options like openWrt).
 
-IP Addresses to block : 146.112.255.0 to 146.112.255.255, 208.67.222.222, 208.67.220.220
+IP Addresses to block : (Proxy) 146.112.0.0/16, (DNS) 208.67.222.222, (DNS) 208.67.220.220 those ![addresses](https://support.umbrella.com/hc/en-us/articles/230563527-Using-Umbrella-with-an-HTTP-proxy) may be based on your region (mostly for the proxy performances).
 
-> The IP addresses may change and make this ineffective, to identify new IP addresses use the Cisco Umbrella documentation.
+> The IP addresses may change in the future and make this ineffective, to identify new IP addresses use the Cisco Umbrella documentation.
+
+> The proxy in Cisco Umbrella is defined *intelligent proxy* and is not supposed to proxy all your web traffic (even if in my test all traffic were via Cisco Umbrella proxy) so you may have some cache in the Cisco Umbrella client that could stop your traffic.
 
 > A future update may stop all network connectivity when not able to connect to Cisco Umbrella cloud services, having this bypass no longer effective.
 
@@ -47,6 +55,25 @@ This bypass may not work if future updates of Cisco Umbrella will inspect local 
 ### Use a local Proxy on your home network
 
 Cisco Umbrella usage is increasing while more people are working from home, so the same approach of using a proxy server running on Android can be rebuild using a proxy running on your openWrt router or any other local resource (a Raspberry or similar).
+
+If you have an ![openWrt](https://openwrt.org/) router, you can run ![tinyproxy](http://tinyproxy.github.io/) and trasfer your traffic to it instead to the Android device or NATting the traffic to 146.112.0.0/16 ports TCP 80, 443 to your tinyproxy because as per below image the Cisco Umbrella Proxy is a standard HTTP Proxy (doesn't have any special sintax).
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_proxy_443.PNG)
+
+> As side information, the traffic that is not HTTP/HTTPS may be allowed based on the configuration. In the above picture the QUIC protocol is not transferred to a proxy (even because is UDP and the Cisco Umbrella Proxy seems an HTTP Proxy and not a SOCKS5 Proxy) but other protocols may be stopped.
+
+A *PREROUTING* rule in the iptables of your openWrt router to trasfer the TCP 80 and 443 to your router on the port were tinyproxy is listing (48241 in the example) will intercept all the traffic with destination Cisco Umbrella Proxy.
+
+```
+{
+iptables -t nat -A PREROUTING -d 146.112.0.0/16 -p tcp  --dport 443 -j DNAT --to-destination 192.168.127.1:48241
+iptables -t nat -A PREROUTING -d 146.112.0.0/16 -p tcp  --dport 80  -j DNAT --to-destination 192.168.127.1:48241
+}
+```
+
+In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16 the request is processed by tinyproxy. As result is not required to alter the browser (or any other application to be allowed) configuration as in case of an Android Proxy.
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_forwarding_tinyproxy.PNG)
 
 ### Using scrcpy to remote into your Android
 
