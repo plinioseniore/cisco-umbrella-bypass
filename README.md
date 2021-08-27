@@ -74,11 +74,13 @@ This bypass may not work if future updates of Cisco Umbrella will inspect local 
 
 Cisco Umbrella usage is increasing while more people are working from home, so the same approach of using a proxy server running on Android can be rebuild using a proxy running on your openWrt router or any other local resource (a Raspberry or similar).
 
-If you have an ![openWrt](https://openwrt.org/) router, you can run ![tinyproxy](http://tinyproxy.github.io/) and trasfer your traffic to it instead to the Android device or NATting the traffic to 146.112.0.0/16 ports TCP 80, 443 to your tinyproxy because as per below image the Cisco Umbrella Proxy is a standard HTTP Proxy (doesn't have any special sintax).
+If you have an ![openWrt](https://openwrt.org/) router, you can run ![tinyproxy](http://tinyproxy.github.io/) and trasfer your traffic to it instead of the Android device. Another altertiva is NATting the traffic to 146.112.0.0/16 ports TCP 80, 443 to your tinyproxy because as per below image the Cisco Umbrella Proxy is a standard HTTP Proxy (doesn't have any special sintax).
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_proxy_443.PNG)
 
 > As side information, the traffic that is not HTTP/HTTPS may be allowed based on the configuration. In the above picture the QUIC protocol is not transferred to a proxy (even because is UDP and the Cisco Umbrella Proxy seems an HTTP Proxy and not a SOCKS5 Proxy) but other protocols may be stopped.
+
+### NAT Traffic
 
 A *PREROUTING* rule in the iptables of your openWrt router to transfer the TCP 80 and 443 to your router on the port were tinyproxy is listening (48241 in the example) will intercept all the traffic with destination Cisco Umbrella Proxy.
 
