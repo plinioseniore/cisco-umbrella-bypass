@@ -80,8 +80,8 @@ If your end goal is only to browse websites that are not allowed via Cisco Umbre
 
 # Credits
 
-This study is based on some experiments done by me and my friend ![lalontra](https://twitter.com/lalontra) and the following web resources:
+This study is based on some experiments done by me and my friend [lalontra](https://twitter.com/lalontra) and the following web resources:
 
-- ![Cisco Umbrella - Appendix A – Status, States, and Functionality](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality)
-- ![A Study on How Cisco Umbrella Roaming Client Works](https://medium.com/swlh/a-study-on-how-cisco-umbrella-roaming-client-works-f3cd552c7112)
-- ![Bypass Cisco Umbrella & OpenDNS website block](https://www.youtube.com/watch?v=SbN2Nzzy59Q)
+- [Cisco Umbrella - Appendix A – Status, States, and Functionality](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality)
+- [A Study on How Cisco Umbrella Roaming Client Works](https://medium.com/swlh/a-study-on-how-cisco-umbrella-roaming-client-works-f3cd552c7112)
+- [Bypass Cisco Umbrella & OpenDNS website block](https://www.youtube.com/watch?v=SbN2Nzzy59Q)
