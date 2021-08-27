@@ -74,6 +74,10 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_forwarding_tinyproxy.PNG)
 
+> Having a NAT rule that process the Cisco Umbrella proxy requests via tinyproxy means that the DNS stills runs on Cisco Umbrella (unless you introduce a firewall rule to disable it), the tinyproxy will receive the requests to connect to a specific IP address resolved by Cisco Umbrella DNS. Rather having a proxy configured in Firefox means that the browser doesn't process any DNS request and send to the proxy a request on a specific domain, so that tinyproxy will query the DNS.
+> Having the Cisco Umbrella DNS means having still some level of protection even if the Cisco Umbrella proxy is not used, rather a proxy configured in Firefox means a complete bypass of Cisco Umbrella.
+
+
 ### Using scrcpy to remote into your Android
 
 If your end goal is only to browse websites that are not allowed via Cisco Umbrella, another option is to use [scrcpy](https://github.com/Genymobile/scrcpy) that via USB will remote your Android device into a window. Then your can browse with your mobile connection.
