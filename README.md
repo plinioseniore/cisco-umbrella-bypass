@@ -4,7 +4,8 @@
 
 Cisco Umbrella is a DNS and Proxy cloud service used to secure and restrict traffic without a VPN, it intercept all DNS requests and will proxy all the traffic. Based on the configuration it could reject all traffic that is not HTTP/HTTPS.
 
-> DISCLAIMER : Use the below at your own risk, if your company/school has set Cisco Umbrella is to protect the devices from cyber threats. A bypass of Cisco Umbrella is likely a breach in the local policy of your company/school, the information in this page shall be used for *educational purpose only* and are shared to provide a better understanding of Cisco Umbrella.
+> DISCLAIMER : This is a study of how Cisco Umbrella works and which are the possible bypass, there is no intention to promote the bypass of Cisco Umbrella. If your organization has placed Cisco Umbrella is to protec your devices from cyberthreads, run this test with full acknowledge and authorization of your organization. 
+> If you are using this information for any goal than is not a study or analysis, your are doing that at your own risk. 
 
 Assuming that you could not disable Cisco Umbrella, the following option can allow you to bypass it:
 
