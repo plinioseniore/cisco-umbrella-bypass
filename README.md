@@ -40,11 +40,11 @@ Furthermore there is not DNS traffic with 208.67.0.0/16
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/udp_probe.PNG)
 
-and all the DNS traffic is directly with the home router
+and DNS traffic seems directly to the home router (even if some domains are not resolved via the local DNS)
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/dcs_requestes.PNG)
 
-As all the traffic seems to go via the Cisco Umbrella Proxy, it could be that the implementation under test is not really using DNS and the filter is done at proxy level. As proof, the log of the DNS on the OpenWrt router shows DNS requests received, so the UDP communication to 208.67.0.0/16 is not an encrypted DNS and Cisco Umbrella doesn't intercept the traffic at such a level that it doesn't appear in WireShark.
+As all (or most) of the web traffic seems to go via the Cisco Umbrella Proxy, it could be that the implementation under test is not really using DNS and the filter is done at proxy level. As proof, the log of the DNS on the OpenWrt router shows DNS requests received, so the UDP communication to 208.67.0.0/16 is not an encrypted DNS and Cisco Umbrella doesn't intercept the traffic at such a level that it doesn't appear in WireShark.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_dns_log.PNG)
 
