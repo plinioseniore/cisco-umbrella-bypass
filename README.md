@@ -44,10 +44,9 @@ and DNS traffic seems directly to the home router (even if some domains are not 
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/dcs_requestes.PNG)
 
-As all (or most) of the web traffic seems to go via the Cisco Umbrella Proxy, it could be that the implementation under test is not really using DNS and the filter is done at proxy level. As proof, the log of the DNS on the OpenWrt router shows DNS requests received, so the UDP communication to 208.67.0.0/16 is not an encrypted DNS and Cisco Umbrella doesn't intercept the traffic at such a level that it doesn't appear in WireShark.
+As all (or most) of the web traffic seems to go via the Cisco Umbrella Proxy, it could be that the implementation under test is not really using DNS and the filter is done at proxy level. The log of the DNS on the OpenWrt router shows DNS requests received, even if there is no proof that all the DNS traffic goes via local DNS and not via 208.67.0.0/16 over an encrypted communication.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_dns_log.PNG)
-
 
 ### Use a local Proxy on Android
 
@@ -93,7 +92,8 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_forwarding_tinyproxy.PNG)
 
-> Compared to a proxy configured in Firefox the main difference is that DNS is resolved locally and not by tinyproxy, that receive directly the resolved IP address and not the domain name.
+> Compared to a proxy configured in Firefox the main difference is that DNS is resolved locally and not by tinyproxy, that receive directly the resolved IP address and not the domain name. Based on your Cisco Umbrella configuration and which firewall restriction has been applied, having the DNS solved locally could means that DNS is served by Cisco Umbrella.
+> Having the DNS served by Cisco Umbrella may imply a monitoring of which internet resources you are accessing (without an access to the dataflow).
 
 # Credits
 
