@@ -8,6 +8,11 @@ Cisco Umbrella is a DNS and Proxy cloud service used to secure and restrict traf
 > If you are using this information for any goal than is not a study or analysis, you are doing that at your own risk. 
 
 Assuming that you could not disable Cisco Umbrella, the following option can allow you to bypass it:
+- Rule in Windows Firewall
+- HTTP(S) Proxy in Android
+- HTTP(S) Proxy in the router
+- Virtual Machine
+- Virtual Machien HTTP(S) Proxy
 
 ### Stop traffic to Cisco Umbrella Cloud DNS and Proxy
 
@@ -94,6 +99,22 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 
 > Compared to a proxy configured in Firefox the main difference is that DNS is resolved locally and not by tinyproxy, that receive directly the resolved IP address and not the domain name. Based on your Cisco Umbrella configuration and which firewall restriction has been applied, having the DNS solved locally could means that DNS is served by Cisco Umbrella.
 > Having the DNS served by Cisco Umbrella may imply a monitoring of which internet resources you are accessing (without an access to the dataflow).
+
+### Use Virtual Machines
+
+Virtual Machines doesn't use the TCP/IP stack of the host operating system if used in Bridged Mode, so the traffic doesn't trigger Cisco Umbrella. The easiest option is run a full system in the Virtual Machine, including the browser and the other applications you want to run without Cisco Umbrella proxy. This could have impact on the overall used resources.
+
+Another option is using the Virtual Machine for minimum network functionalities, in the below picture openWrt is running via VirtualBox on the same host were Cisco Umbrella is installed.
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_vbox.PNG)
+
+Running openWrt with two network adapters, one host-only adapter with a local address and the other bridged to the internect connected network, will allow to leverage the same proxy bypass used previously.
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/vboxnetworkadapters.png)
+
+The traffic could be redirected to the host-only interface *192.168.56.2* configuring the proxy in Firefox or in the other application in use, having openWrt running tinyproxy would emulate the proxy bypass seen above.
+
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_interfaces.PNG)
 
 # Credits
 
