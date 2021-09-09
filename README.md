@@ -104,22 +104,23 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 
 Virtual Machines doesn't use the TCP/IP stack of the host operating system if used in Bridged Mode, so the traffic doesn't trigger Cisco Umbrella. The easiest option is run a full system in the Virtual Machine, including the browser and the other applications you want to run without Cisco Umbrella proxy. This could have impact on the overall used resources.
 
-Another option is using the Virtual Machine for minimum network functionalities, in the below picture openWrt is running via VirtualBox on the same host were Cisco Umbrella is installed.
+Another option is using the Virtual Machine for minimum network functionalities, in the below picture OpenWrt is running via VirtualBox on the same host were Cisco Umbrella is installed.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_vbox.PNG)
 
-Running openWrt with two network adapters, one host-only adapter with a local address and the other bridged to the internect connected network, will allow to leverage the same proxy bypass used previously.
+Running OpenWrt with two network adapters, one host-only adapter with a local address and the other bridged to the internect connected network, will allow to leverage the same proxy bypass used previously.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/vboxnetworkadapters.png)
 
-The traffic could be redirected to the host-only interface *192.168.56.2* configuring the proxy in Firefox or in the other application in use, having openWrt running tinyproxy would emulate the proxy bypass seen above.
+The traffic could be redirected to the host-only interface *192.168.56.2* configuring the proxy in Firefox or in the other application in use, having OpenWrt running tinyproxy would emulate the proxy bypass seen above.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_interfaces.PNG)
 
 # Credits
 
-This study is based on some experiments done by me and my friend [lalontra]() and the following web resources:
+This study is based on some experiments done by my friend [lalontra]() and me, with reference to the following web resources:
 
 - [Cisco Umbrella - Appendix A – Status, States, and Functionality](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality)
 - [A Study on How Cisco Umbrella Roaming Client Works](https://medium.com/swlh/a-study-on-how-cisco-umbrella-roaming-client-works-f3cd552c7112)
 - [Bypass Cisco Umbrella & OpenDNS website block](https://www.youtube.com/watch?v=SbN2Nzzy59Q)
+- [OpenWrt on VirtuaBox](https://openwrt.org/docs/guide-user/virtualization/virtualbox-vm)
