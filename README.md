@@ -26,7 +26,8 @@ As result a yellow icon is shown on Cisco Umbrella client, according to the docu
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_dns_disabled.png)
 
-Including also the Cisco Umbrella proxy in the deny list of the firewall rue will have this bypass working. The connection is established directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough (like a VPN over HTTPS) once the first timeout is gone will have the usual performances.
+Including also the Cisco Umbrella proxy in the deny list of the firewall rule, will have this bypass working. The connection is established directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough, once the first timeout is gone, you will have the usual performances.
+
 Based on the rights you have on your PC you can have this rule in Windows Firewall or in your home Firewall (if it has configurable options like openWrt).
 
 IP Addresses to block : (Proxy) 146.112.0.0/16, (DNS) 208.67.222.222, (DNS) 208.67.220.220 those ![addresses](https://support.umbrella.com/hc/en-us/articles/230563527-Using-Umbrella-with-an-HTTP-proxy) may be based on your region (mostly for the proxy performances).
@@ -98,7 +99,7 @@ In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_forwarding_tinyproxy.PNG)
 
 > Compared to a proxy configured in Firefox the main difference is that DNS is resolved locally and not by tinyproxy, that receive directly the resolved IP address and not the domain name. Based on your Cisco Umbrella configuration and which firewall restriction has been applied, having the DNS solved locally could means that DNS is served by Cisco Umbrella.
-> Having the DNS served by Cisco Umbrella may imply a monitoring of which internet resources you are accessing (without an access to the dataflow).
+> Having the DNS served by Cisco Umbrella may imply a filtering and/or monitoring of which internet resources you are accessing (without an access to the dataflow).
 
 ### Use Virtual Machines
 
