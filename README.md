@@ -18,7 +18,7 @@ Assuming that you could not disable Cisco Umbrella, the following option can all
 
 Creating a firewall rule to don't allow traffic to Cisco Umbrella DNS and Proxy, the Umbrella DNS will become inactive but the Proxy will still be there and will timeout. 
 
-In the ![Cisco Umbrella documentation](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality) is listed that if *There is at least one active network connection; however, the Umbrella roaming client can’t connect to 208.67.222.222 / 208.67.220.220 / 2620:119:53::53 / 2620:119:35::35 over port 53/UDP on any active connection. The user is not protected by Umbrella or reporting to Umbrella. The system's DNS settings are now back to their original settings (DHCP or Static).*
+In the [Cisco Umbrella documentation](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality) is listed that if *There is at least one active network connection; however, the Umbrella roaming client can’t connect to 208.67.222.222 / 208.67.220.220 / 2620:119:53::53 / 2620:119:35::35 over port 53/UDP on any active connection. The user is not protected by Umbrella or reporting to Umbrella. The system's DNS settings are now back to their original settings (DHCP or Static).*
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/cisco_umbrella_status.PNG)
 
