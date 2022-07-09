@@ -13,6 +13,7 @@ Assuming that you could not disable Cisco Umbrella, the following option can all
 - HTTP(S) Proxy in the router
 - Virtual Machine
 - Virtual Machien HTTP(S) Proxy
+- Change DNS Settings
 
 ### Stop traffic to Cisco Umbrella Cloud DNS and Proxy
 
@@ -116,6 +117,14 @@ Running OpenWrt with two network adapters, one host-only adapter with a local ad
 The traffic could be redirected to the host-only interface *192.168.56.2* configuring the proxy in Firefox or in the other application in use, having OpenWrt running tinyproxy would emulate the proxy bypass seen above.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/main/img/openwrt_interfaces.PNG)
+
+### Change DNS Settings
+
+Changing your DNS settings on your device from (Automatic DHCP) to Manual, and then setting DBS settings like so:
+Prefered DNS : 8.8.8.8
+Alternative DNS : 8.8.4.4
+
+![](https://i.ibb.co/p3zBxR8/dns.png)
 
 # Credits
 
