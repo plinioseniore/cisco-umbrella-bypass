@@ -1,4 +1,4 @@
-# Cisco Umbrella
+# New Document# Cisco Umbrella
 
 ## Introduction
 
@@ -120,11 +120,13 @@ The traffic could be redirected to the host-only interface *192.168.56.2* config
 
 ### Change DNS Settings
 
-Changing your DNS settings on your device from (Automatic DHCP) to Manual, and then setting DBS settings like so:
-Prefered DNS : 8.8.8.8
-Alternative DNS : 8.8.4.4
+Changing your DNS settings on your device from (Automatic DHCP) to Manual, and then setting DNS settings like so:
 
-![](https://i.ibb.co/p3zBxR8/dns.png)
+##### Prefered DNS : 8.8.8.8
+
+##### Alternative DNS : 8.8.4.4
+
+![url=https://imgbb.com/](https://i.ibb.co/p3zBxR8/dns.png)
 
 # Credits
 
