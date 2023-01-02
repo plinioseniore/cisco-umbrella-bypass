@@ -11,21 +11,21 @@ In the verified configuration, Cisco Umbrella acts just after the IP stack of th
 
 The DNS module intercept all DNS traffic and redirect the same to the Umbrella DNS for filtering and logging, this allows restriction of access to filtered website (like Social Media or Web Mail, based on configuration). In the ```ipconfig /all``` output the DNS configuration is not altered.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/ipconfigall.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/ipconfigall.png)
 
 The SWG module is a cloud proxy, HTTP and HTTPS traffic is sent to Umbrella proxy, where it could be inspected. The HTTPS traffic is inspected with a Man-in-the-Middle (MITM) approach, decrypted at proxy end and re-encrypted using a Cisco certificate installed on the device.
 
 The below image shows the same website with the SWG module enabled and with a bypass active, in the first case, the site traffic is re-encrypted with a Cisco certificate. The browser will not alert the user as the certificate is installed and trusted in the device.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/SWG_SSL_Inspection_1.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/SWG_SSL_Inspection_1.png)
 
 Here the details of the certificates:
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/SWG_SSL_Inspection_2.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/SWG_SSL_Inspection_2.png)
 
 The decryption of the traffic, allows Cisco Umbrella to verify the content to identify potential issues, but at same time allow them to access all the traffic in plain, including sensitive information. In the below image, inspection has been trigged on an ecommerce website.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/SWG_SSL_Inspection_3.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/SWG_SSL_Inspection_3.png)
 
 Assuming that Cisco Umbrella cannot be disabled on the device, the following actions will bypass it:
 - Rules in Firewall
@@ -35,7 +35,7 @@ Assuming that Cisco Umbrella cannot be disabled on the device, the following act
 - Virtual Machine HTTP(S) Proxy
 - Tunnel Traffic (VPN)
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/ciscoumbrellaservices.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/ciscoumbrellaservices.PNG)
 
 ### Rules in Firewall
 
@@ -43,15 +43,15 @@ Using a firewall to restrict access to Cisco Umbrella servers, will trigger the 
 
 In the [Cisco Umbrella documentation](https://docs.umbrella.com/deployment-umbrella/docs/appx-a-status-and-functionality), is listed that if *There is at least one active network connection; however, the Umbrella roaming client can’t connect to 208.67.222.222 / 208.67.220.220 / 2620:119:53::53 / 2620:119:35::35 over port 53/UDP on any active connection. The user is not protected by Umbrella or reporting to Umbrella. The system's DNS settings are now back to their original settings (DHCP or Static).*
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/cisco_umbrella_status.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/cisco_umbrella_status.PNG)
 
 As result of a firewall rule that restrict the access to the above IPs, a yellow icon is shown on Cisco Umbrella client, according to the documentation this could be enough to have Cisco Umbrella DNS disabled.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/cisco_umbrella_dns_disabled.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/cisco_umbrella_dns_disabled.png)
 
 In the detail pane the DNS protection is shown as disabled, the SWG will continue to run and the Umbrella filter will still be effective via the cloud proxy.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/DNS_1.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/DNS_1.png)
 
 Including also the Cisco Umbrella proxy in the deny list of the firewall rule, will have this bypass working. The connection is established directly at the timeout, so a website that opens multiple TCP connections will require a longer than usual time to load, rather when a single TCP connection is enough, once the first timeout is gone, you will have the usual performances.
 
@@ -61,19 +61,19 @@ IP Addresses to block : (Proxy) 146.112.0.0/16, (DNS) 208.67.222.222, (DNS) 208.
 
 Based on the notes by [Andre Camillo](https://medium.com/swlh/a-study-on-how-cisco-umbrella-roaming-client-works-f3cd552c7112), there should be some redirect of the DNS traffic to the Cisco Umbrella services, rather in the implementation under test only TCP port 53 is bind to *dnscrypt-proxy.exe*.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/netstat.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/netstat.png)
 
 Furthermore, there is no DNS traffic with 208.67.0.0/16
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/udp_probe.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/udp_probe.PNG)
 
 and DNS traffic seems directly to the home router (even if some domains are not resolved via the local DNS)
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/dcs_requestes.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/dcs_requestes.PNG)
 
 As all (or most) of the web traffic seems to go via the Cisco Umbrella Proxy, it could be that the implementation under test is not really using DNS and the filter is done at proxy level. The log of the DNS on the OpenWrt router shows DNS requests received, even if there is no proof that all the DNS traffic goes via local DNS and not via 208.67.0.0/16 over an encrypted communication.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/openwrt_dns_log.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/openwrt_dns_log.PNG)
 
 > The proxy in Cisco Umbrella is defined *intelligent proxy* and from the documentation seems to not be supposed to proxy all the traffic. In this study, has been seen that all the traffic goes via the proxy, but not all traffic is inspected. So, some HTTPS website will be presented in the browser with their original certificate. 
 
@@ -84,11 +84,11 @@ The first request to the LAN address is resolved directly, rather the WAN one is
 
 So, having a proxy on a local interface is a bypass option. The local Proxy will resolve the DNS and handle all the traffic via the phone mobile connection.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/http_to_router_lan_wan_interface.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/http_to_router_lan_wan_interface.png)
 
 The IP addresses in the private range are not processed by Cisco Umbrella, even if the traffic is processed via the IP gateway, this makes sense as the Cisco Umbrella Proxy could not access the local resources for inspection. The actual implementation of Cisco Umbrella doesn't introduce any restriction on the traffic between local private addresses, so that any port is allowed. In the below image, two networks with private addresses can communicate on HTTPS via the gateway (the router).
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/local_address_multihop.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/local_address_multihop.png)
 
 Having the Android device running an HTTP(S) Proxy app over the local network, allow the redirection of the traffic far from Umbrella. The application that need to bypass Umbrella should support the use of HTTP Proxy. Firefox and all major browser has this option included, VPN software like Softether also.
 
@@ -97,7 +97,7 @@ The Android phone shall be configured as USB Tethering interface, so that on you
 Generally Cisco Umbrella is deployed on the device via Cisco AnyConnect:
 
 > If administrative rights are available, "Cisco AnyConnect" can be disabled from the local interface to the Android device and the *metrics* can be set to an high enough value (say 1000) to have only the local traffic (so the one to the local proxy) via the Android connection. Without, all traffic is via Android, even system updated or others that may consume high volume of data.
-> ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/tethering_interface_settings.PNG)
+> ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/tethering_interface_settings.PNG)
 
 The use of the mobile network is not strictly required:
 
@@ -113,7 +113,7 @@ Cisco Umbrella usage is increasing while more people are working from home, so t
 
 With an [OpenWrt](https://OpenWrt.org/) router, run [tinyproxy](http://tinyproxy.github.io/) and transfer the traffic to it instead of the Android device. Another alterative is NATting the traffic to 146.112.0.0/16 ports TCP 80, 443 to tinyproxy because as per below image the Cisco Umbrella Proxy is a standard HTTP Proxy (doesn't have any special syntax and doesn’t verify the connection authenticity).
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/cisco_umbrella_proxy_443.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/cisco_umbrella_proxy_443.PNG)
 
 > As side information, the traffic that is not HTTP/HTTPS may be allowed based on the configuration. In the above picture the QUIC protocol is not transferred to a proxy (even because is UDP and the Cisco Umbrella Proxy is an HTTP Proxy and not a SOCKS5 Proxy).
 
@@ -128,7 +128,7 @@ iptables -t nat -A PREROUTING -d 146.112.0.0/16 -p tcp  --dport 80  -j DNAT --to
 
 In the below image, even if the proxy IP address is in the subnet 146.112.0.0/16 the request is processed by tinyproxy. As result is not required to alter the browser (or any other application to be allowed) configuration to transfer the traffic to the local Proxy.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/cisco_umbrella_forwarding_tinyproxy.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/cisco_umbrella_forwarding_tinyproxy.PNG)
 
 > NATting the HTTP/HTTPS traffic and leaving access to the Cisco Umbrella DNS, means that URL are still resolved by it, this may imply a filtering and/or monitoring of which internet resources you are accessing (without an access to the dataflow).
 
@@ -140,15 +140,15 @@ Virtual Machines doesn't use the TCP/IP stack of the host operating system if us
 
 Another option, is using the Virtual Machine for minimum network functionalities, in the below picture, OpenWrt is running via VirtualBox on the same host were Cisco Umbrella is installed.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/openwrt_vbox.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/openwrt_vbox.PNG)
 
 Running OpenWrt with two network adapters, one host-only adapter with a local address and the other bridged to the internet connected network, will allow to leverage the same proxy bypass used previously.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/vboxnetworkadapters.png)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/vboxnetworkadapters.png)
 
 The traffic could be redirected to the host-only interface *192.168.56.2* configuring the proxy in Firefox or in the other application in use, having OpenWrt running tinyproxy would emulate the proxy bypass seen above.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/openwrt_interfaces.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/openwrt_interfaces.PNG)
 
 The NATting can also be applied with OpenWrt running in the virtual machine, but in that case, it shall be ensured that the traffic will not flow outside of the virtual machine. This can be achieved ensuring that the interface connected to internet has a working configuration only in the Virtual Machine and not in the host device Operative System.
 
@@ -177,16 +177,16 @@ In this case any local traffic is redirect in the tunnel and will never reach th
 There is a workaround, Umbrella is advertised as a protection mechanism and this overlap with one of the use of VPNs: tunnel traffic into a firewall and restrict traffic as protection. Umbrella already tunnel all HTTP(S) traffic to its proxy, so there is no longer a reason to have Umbrella traffic tunneled in a corporate VPN.
 Looking at your routes while the VPN is active you may discover that Umbrella is allowed outside of the tunnel.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/routeprint_umbrella1.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/routeprint_umbrella1.PNG)
 
 If so, the workaround is quite straightforward, create a virtual interface and assign an IP address in the Umbrella range, you want need to really get in touch with those addresses but you can run your proxy on that interface.
 AnyConnect will not force that traffic into the tunnel and you will still have a local resource accessible even while the VPN is active.
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/localinterface_umbrellaaddress.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/localinterface_umbrellaaddress.PNG)
 
 As result, when the VPN client force the IP routes it will not touch the Umbrella IP addresses. 
 
-![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/doc/img/routeprint_umbrella2.PNG)
+![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/routeprint_umbrella2.PNG)
 
 Attaching a VirtualBox VM on that virtual interface will complete the trick, in the above example the IPs 146.112.0.2 and 146.112.0.3 are available to run the local proxy.
 
