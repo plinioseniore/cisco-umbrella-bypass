@@ -175,12 +175,13 @@ Likely if you have Cisco Umbrella you also have Cisco AnyConnect as VPN, if so i
 In this case any local traffic is redirect in the tunnel and will never reach the proxy, so the bypass will no longer work. The VPN client achieve this forcing the IP routes on your computer.
 
 There is a workaround, Umbrella is advertised as a protection mechanism and this overlap with one of the use of VPNs: tunnel traffic into a firewall and restrict traffic as protection. Umbrella already tunnel all HTTP(S) traffic to its proxy, so there is no longer a reason to have Umbrella traffic tunneled in a corporate VPN.
+
 Looking at your routes while the VPN is active you may discover that Umbrella is allowed outside of the tunnel.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/routeprint_umbrella1.PNG)
 
-If so, the workaround is quite straightforward, create a virtual interface and assign an IP address in the Umbrella range, you want need to really get in touch with those addresses but you can run your proxy on that interface.
-AnyConnect will not force that traffic into the tunnel and you will still have a local resource accessible even while the VPN is active.
+If so, the workaround is quite straightforward, create a virtual interface and assign an IP address in the Umbrella range, you can run your proxy on that interface.
+In that way a whitelisted IP address on your local interface, good enough to let AnyConnect flow the traffic and reach your local resources.
 
 ![](https://raw.githubusercontent.com/plinioseniore/cisco-umbrella-bypass/pages/img/localinterface_umbrellaaddress.PNG)
 
