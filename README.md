@@ -193,6 +193,8 @@ Attaching a VirtualBox VM on that virtual interface will complete the trick, in 
 
 > Umbrella doesn't tunnel HTTP traffic to itself into its HTTP proxy, is quite understandable why. As result, you cannot access local services running port 80 and 443 trough this approach.
 
+This kind of abuse of the routing paths has later being named [TunnelCrack](https://tunnelcrack.mathyvanhoef.com/details.html#intro) and presented at [USENIX Security](https://www.usenix.org/system/files/usenixsecurity23-xue.pdf).
+
 ## Bypass Analysis
 
 Based on what seen above, the bypass options acts around the followings:
